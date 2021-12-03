@@ -1,0 +1,12 @@
+<litepal>
+    <!--库名指定为sunny_weather-->
+    <dbname value="sunny_weather"/>
+    <!--库版本指定为1-->
+    <version value="1"/>
+    <list>
+        <!--将Province、City和County3个实体类添加到映射列表中-->
+        <mapping class="com.sunnyweather.android.db.Province"/>
+        <mapping class="com.sunnyweather.android.db.City"/>
+        <mapping class="com.sunnyweather.android.db.County"/>
+    </list>
+</litepal>

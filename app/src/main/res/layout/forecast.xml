@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/forecast_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="35dp"
+    android:orientation="vertical"
+    android:background="#84E6E6E6">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textColor="@color/black"
+        android:layout_gravity="start"
+        android:gravity="start"
+        android:textSize="18sp"
+        android:text="近七日天气"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/forecast_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="372dp"
+        />
+</LinearLayout>
