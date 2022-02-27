@@ -1,7 +1,5 @@
 package com.example.sunnyweather.view.activity;
 
-import static com.amap.api.location.AMapLocationClient.setApiKey;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -33,7 +31,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.amap.api.services.core.AMapException;
+import com.amap.api.maps.AMapException;
 import com.amap.api.services.geocoder.GeocodeAddress;
 import com.amap.api.services.geocoder.GeocodeQuery;
 import com.amap.api.services.geocoder.GeocodeResult;
@@ -81,12 +79,17 @@ public class MYNEWWeatherActivity extends BaseAcvity implements AMapLocationList
     private String location_name;
     private String nowCounty;
     private AMapLocationListener aMapLocationListener;
+    AMapLocationClient aMapLocationClient1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mynewweatheractivity);
+
+
+        //初始化定位
+        AMapLocationClient.updatePrivacyShow(this, true, true);
+        AMapLocationClient.updatePrivacyAgree(this, true);
         //ActivityCollector.finishAll();
-        setApiKey("d68b2f811b87b0f54c9dea287b8570f7");
         viewHandler = new ViewHandler(MYNEWWeatherActivity.this);
         //全屏
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -407,7 +410,7 @@ public class MYNEWWeatherActivity extends BaseAcvity implements AMapLocationList
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        bingPicImg.setImageResource(R.drawable.background2);
+                        //bingPicImg.setImageResource(R.drawable.background);
                     }
                 });
             }
@@ -443,7 +446,12 @@ public class MYNEWWeatherActivity extends BaseAcvity implements AMapLocationList
     }
 
     private void getLatlon(String cityName) throws AMapException {
-        GeocodeSearch geocodeSearch=new GeocodeSearch(this);
+        GeocodeSearch geocodeSearch= null;
+        try {
+            geocodeSearch = new GeocodeSearch(this);
+        } catch (com.amap.api.services.core.AMapException e) {
+            e.printStackTrace();
+        }
         geocodeSearch.setOnGeocodeSearchListener(new GeocodeSearch.OnGeocodeSearchListener() {
             @Override
             public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
@@ -476,15 +484,17 @@ public class MYNEWWeatherActivity extends BaseAcvity implements AMapLocationList
 
     }
     public void getLocation() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                AMapLocationClient aMapLocationClient = null;
-                try {
-                    aMapLocationClient = new AMapLocationClient(getApplicationContext());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        try {
+            aMapLocationClient1 = new AMapLocationClient(getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+
+
+
                 AMapLocationClientOption option = new AMapLocationClientOption();
 
                 option.setHttpTimeOut(20000);
@@ -492,14 +502,13 @@ public class MYNEWWeatherActivity extends BaseAcvity implements AMapLocationList
                 option.setOnceLocation(true);
                 option.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
 
-
-                aMapLocationClient.setLocationListener(aMapLocationListener);
-                aMapLocationClient.setLocationOption(option);
-                aMapLocationClient.stopLocation();
-                aMapLocationClient.startLocation();
+                aMapLocationClient1.setLocationListener(aMapLocationListener);
+                aMapLocationClient1.setLocationOption(option);
+                aMapLocationClient1.stopLocation();
+                aMapLocationClient1.startLocation();
                 Log.d("getlocation", "run: ");
-            }
-        }).start();
+//            }
+//        }).start();
     }
 
     public static boolean isLocationEnabled(Context context) {

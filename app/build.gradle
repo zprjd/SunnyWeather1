@@ -5,10 +5,10 @@ plugins {
 android {
     signingConfigs {
         debug {
-            keyAlias 'key0'
-            keyPassword 'liuxuhui528'
-            storeFile file('E:\\learn\\Android\\Android.jks')
-            storePassword 'liuxuhui528'
+            keyAlias 'key2'
+            keyPassword 'qqqqqq'
+            storeFile file('E:\\learn\\Android\\wea.jks')
+            storePassword 'qqqqqq'
         }
     }
     compileSdkVersion 30
@@ -37,6 +37,8 @@ android {
 }
 
 dependencies {
+    //定位功能
+    implementation 'com.amap.api:location:latest.integration'
     implementation "com.google.android.material:material:1.1.0"
     implementation  'com.squareup.okhttp3:okhttp:3.4.1'
     implementation 'com.google.code.gson:gson:2.7'
